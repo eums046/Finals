@@ -92,3 +92,23 @@
     </footer>
 </body>
 </html>
+
+<?php
+$conn = new mysqli("localhost", "root", "", "OneUnitLeft_db");
+$result = $conn->query("SELECT * FROM products");
+?>
+
+<h2>Available Products</h2>
+<div class="products">
+<?php while ($row = $result->fetch_assoc()) { ?>
+    <div class="product">
+        <img src="images/<?php echo htmlspecialchars(basename($row['image'])); ?>" width="150">
+        <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+        <p>₱<?php echo number_format($row['price'], 2); ?></p>
+        <form action="add_to_cart.php" method="post">
+            <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+            <input type="submit" value="Add to Cart">
+        </form>
+    </div>
+<?php } ?>
+</div>

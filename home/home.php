@@ -28,6 +28,7 @@ session_start();
         <div class="nav-right">
             <a href="cart.php">🛒</a>
              <a href="profile.php">👤</a>
+             <a href="../admin/admin_login.php" class="admin-link">Admin Panel</a>
         </div>
     </nav>
 
