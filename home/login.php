@@ -4,7 +4,7 @@ session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$dbname = "OneUnitLeft_DB";
+$dbname = "oneunit_left";
 
 $conn = mysqli_connect($host, $user, $pass, $dbname);
 if (!$conn) {
