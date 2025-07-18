@@ -15,14 +15,26 @@ $email = $_SESSION["email"];
 $cart = [];
 $total = 0;
 
-$stmt = $conn->prepare("SELECT p.name, p.price, c.quantity FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_email = ?");
+// Fetch user id from users table
+$user_id = null;
+$stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
-$result = $stmt->get_result();
-while ($row = $result->fetch_assoc()) {
-    $cart[] = $row;
-}
+$stmt->bind_result($user_id);
+$stmt->fetch();
 $stmt->close();
+
+if ($user_id !== null) {
+    // Fetch cart items from the database using user_id
+    $stmt = $conn->prepare("SELECT p.name, p.price, c.quantity FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $cart[] = $row;
+    }
+    $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
