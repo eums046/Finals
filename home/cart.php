@@ -16,14 +16,22 @@ if ($conn->connect_error) {
 
 $email = $_SESSION["email"];
 
+// Get user ID from email
+$user_stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+$user_stmt->bind_param("s", $email);
+$user_stmt->execute();
+$user_result = $user_stmt->get_result();
+$user = $user_result->fetch_assoc();
+$user_id = $user['id'];
+
 // Use prepared statement for safety
 $stmt = $conn->prepare("
     SELECT p.name, p.price, p.image, c.quantity
     FROM cart c
     JOIN products p ON c.product_id = p.id
-    WHERE c.user_email = ?
+    WHERE c.user_id = ?
 ");
-$stmt->bind_param("s", $email);
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
