@@ -15,7 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST["email"]);
     $password = mysqli_real_escape_string($conn, $_POST["password"]);
 
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password' AND is_verified = 1";
+    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+
 
     $result = mysqli_query($conn, $sql);
 
