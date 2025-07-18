@@ -11,18 +11,39 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 <html>
 <head>
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../home/style.css">
     <link rel="stylesheet" href="admin.css">
 </head>
-<body>
-    <div class="admin-dashboard">
-        <h2>Welcome, <?php echo htmlspecialchars($_SESSION['admin_username']); ?>!</h2>
-
-        <div class="admin-actions">
-            <a href="/Finals/home/home.php" class="back-button">Back to Homepage</a>
-            <a href="add_product.php">Add New Product</a><br><br>
-            <a href="view_products.php">View All Products</a><br><br>
-            <a href="admin_logout.php">Logout</a>
+<body class="admin-body">
+<header>
+    <div class="header-images">
+        <img src="../home/images/white-name.png" alt="Store Name" class="name-img">
+    </div>
+</header>
+<nav>
+    <div class="nav-left">
+        <a href="../home/home.php">HOME</a>
+        <a href="../home/store.php">STORE</a>
+        <a href="../home/about.php">ABOUT</a>
+    </div>
+    <div class="nav-right">
+        <a href="../home/profile.php">👤</a>
+    </div>
+</nav>
+<main>
+    <div class="profile-box">
+        <h2>Admin Dashboard</h2>
+        <p style="margin-bottom:24px;">Welcome, <strong><?php echo htmlspecialchars($_SESSION['admin_username']); ?></strong>!</p>
+        <div class="profile-btns">
+            <a href="../home/home.php" class="pay-btn">Back to Homepage</a>
+            <a href="add_product.php" class="pay-btn">Add New Product</a>
+            <a href="view_products.php" class="pay-btn">View All Products</a>
+            <a href="admin_logout.php" class="pay-btn">Logout</a>
         </div>
     </div>
+</main>
+<footer>
+    <p>OneUnit Left &copy; 2025 | This website is for educational purposes only.</p>
+</footer>
 </body>
 </html>
