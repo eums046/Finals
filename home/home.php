@@ -7,6 +7,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <title>OneUnit Left - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,10 +37,18 @@ session_start();
         <section class="landing-banner">
             <div class="banner-text">
                 <h1>OneUnit Left</h1>
-                <p>hindi ko pa alam ano ilalagay. vid or animation</p>
-                <a href="store.php" class="cta-button">Shop Now</a>
-                <a href="profile.php" class="cta-button">Join Us</a>
+
+                <video width="420" height="340" autoplay muted loop playsinline>
+                    <source src="images/homevideo.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                 <div class="cta-buttons">
+                    <a href="store.php" class="cta-button">Shop Now</a>
+                    <a href="profile.php" class="cta-button">Join Us</a>
+                </div>
             </div>
+
         </section>
     </main>
 
