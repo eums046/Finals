@@ -76,7 +76,7 @@ while ($row = $result->fetch_assoc()):
 <h3>Total: ₱<?= number_format($total, 2) ?></h3>
 
 <a href="store.php" class="button">← Back to Store</a>
-<a href="checkout.php" class="button">🧾 Proceed to Checkout</a>
+<a href="payment.php" class="button">🧾 Proceed to Checkout</a>
 
 </body>
 </html>
