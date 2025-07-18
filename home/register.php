@@ -13,24 +13,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $fullname = $_POST["full_name"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $fullname = mysqli_real_escape_string($conn, $_POST["full_name"]);
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    $password = mysqli_real_escape_string($conn, $_POST["password"]);
     $confirm = $_POST["confirm_password"];
-    $address = $_POST["address"];
-    $contact = $_POST["contact_number"];
+    $address = mysqli_real_escape_string($conn, $_POST["address"]);
+    $contact = mysqli_real_escape_string($conn, $_POST["contact_number"]);
 
-    if ($password != $confirm) {
-        echo "<script>alert('Passwords do not match.');</script>";
-        
+    // Check if email already exists
+    $check_email = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $check_email->bind_param("s", $email);
+    $check_email->execute();
+    $result_check = $check_email->get_result();
+    
+    if ($result_check->num_rows > 0) {
+        echo "<script>alert('Email already exists. Please use a different email.');</script>";
+    } else if ($password != $confirm) {
+        echo "<script>alert('Passwords do not match.');</script>";        
     } else {
 
     $token = bin2hex(random_bytes(32)); // generate token
 
-    $sql = "INSERT INTO users (full_name, email, password, address, contact_number, token, is_verified)
-            VALUES ('$fullname', '$email', '$password', '$address', '$contact', '$token', 0)";
+    $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, address, contact_number, token, is_verified) VALUES (?, ?, ?, ?, ?, ?, 0)");
+    $stmt->bind_param("ssssss", $fullname, $email, $password, $address, $contact, $token);
     
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute()) {
 
         
 
@@ -52,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Body = "
                 Hi $fullname,<br><br>
                 Please verify your email by clicking the link below:<br>
-                <a href='http://localhost/Tampipig/Finals/Finals/home/verify.php?email=$email&token=$token'>Verify Email</a><br><br>
+                <a href='http://localhost/BIAG/Finals/home/verify.php?email=$email&token=$token'>Verify Email</a><br><br>
                 Thank you!
             ";
 
