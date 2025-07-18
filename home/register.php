@@ -1,8 +1,13 @@
 <?php
 session_start();
 
+require 'vendor/autoload.php'; 
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = new mysqli("localhost", "root", "", "OneUnitLeft_DB");
+    $conn = new mysqli("localhost", "root", "", "oneunit_left");
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -17,18 +22,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($password != $confirm) {
         echo "<script>alert('Passwords do not match.');</script>";
+        
     } else {
-        $sql = "INSERT INTO users (full_name, email, password, address, contact_number)
-                VALUES ('$fullname', '$email', '$password', '$address', '$contact')";
-        if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Registration successful! You may now log in.');</script>";
+
+    $token = bin2hex(random_bytes(32)); // generate token
+
+    $sql = "INSERT INTO users (full_name, email, password, address, contact_number, token, is_verified)
+            VALUES ('$fullname', '$email', '$password', '$address', '$contact', '$token', 0)";
+    
+    if ($conn->query($sql) === TRUE) {
+
+        
+
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com'; 
+            $mail->SMTPAuth = true;
+            $mail->Username = 'tampipig10@gmail.com'; 
+            $mail->Password = 'sbssqfcbssfx sdjb'; // App password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = 465;
+
+            $mail->setFrom('tampipig10@gmail.com', 'OneUnit Left');
+            $mail->addAddress($email, $fullname);
+            $mail->isHTML(true);
+            $mail->Subject = 'Email Verification - OneUnit Left';
+            $mail->Body = "
+                Hi $fullname,<br><br>
+                Please verify your email by clicking the link below:<br>
+                <a href='http://localhost/Tampipig/Finals/Finals/home/verify.php?email=$email&token=$token'>Verify Email</a><br><br>
+                Thank you!
+            ";
+
+            $mail->send();
+            echo "<script>alert('Registration successful! Please check your email to verify your account.');</script>";
             echo "<script>window.location.href='login.php';</script>";
-        } else {
-            echo "<script>alert('Error: " . $conn->error . "');</script>";
+
+        } catch (Exception $e) {
+            echo "<script>alert('Email could not be sent. Error: {$mail->ErrorInfo}');</script>";
         }
+
+
+    } else {
+        echo "<script>alert('Error: " . $conn->error . "');</script>";
     }
 
+
+    
+
     $conn->close();
+}
 }
 ?>
 

@@ -43,7 +43,7 @@
                     <div class="letter">
                         <div class="letter-border"></div>
                         <div class="letter-title">
-                            <h2>About OneUnit Left</h2>
+                            <h2>About OneUnitLeft</h2>
                         </div>
                     </div>
                     <div class="top-fold"></div>
