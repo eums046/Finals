@@ -76,8 +76,12 @@
                 <div class="overlay">fiel</div>
             </div>
             <div class="team-card">
-                <img src="images/member3.jpg" alt="Member 3">
+                <img src="images/jim.jpg" alt="Member 3">
                 <div class="overlay">Jim</div>
+                <div>
+                    <strong>Jim Mañibo </strong><br>
+                    <span>An .</span>
+                </div>
             </div>
             <div class="team-card">
                 <img src="images/member4.jpg" alt="Member 4">
