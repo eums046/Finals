@@ -69,7 +69,7 @@
                 <div class="overlay">
                     <div>
                         <strong>Shane Tampipig</strong><br>
-                        <span>An Animation and Game Development student. Chuchucu.</span>
+                        <span>An Animation and Game Development student. Focused in designing assets and styling visuals, as well as coding user accounts and verification.</span>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 <div class="overlay">
                     <div>
                         <strong>Arran Fiel Sinaguinan</strong><br>
-                        <span>An IT student specializing in Web and Mobile Design.</span>
+                        <span>An IT student specializing in Web and Mobile Design. Managed the creation of admin's dashboard. </span>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                 <div class="overlay">
                     <div>
                         <strong>Jim Manibo</strong><br>
-                        <span>Handles backend logic and helps maintain the store’s functionality.</span>
+                        <span>IT student who handles the addition to cart and helps maintain the store’s functionality.</span>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                 <div class="overlay">
                     <div>
                         <strong>Eumi Biag</strong><br>
-                        <span>Designs assets, manages the visual theme, and contributes to styling.</span>
+                        <span>Web and Mobile Design IT student who focused on the payment section's backend logic. </span>
                     </div>
                 </div>
             </div>
