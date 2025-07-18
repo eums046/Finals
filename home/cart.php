@@ -239,7 +239,7 @@ $result = $stmt->get_result();
                         $total += $subtotal;
                     ?>
                         <div class="cart-item">
-                            <img src="<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
+                            <img src="../uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
                             <div class="product-name"><?= htmlspecialchars($row['name']) ?></div>
                             <div class="price">₱<?= number_format($row['price'], 2) ?></div>
                             <div class="quantity-controls">
