@@ -55,7 +55,7 @@ if ($new_quantity == 0) {
     $stmt = $conn->prepare("DELETE FROM cart WHERE user_id = ? AND product_id = ?");
     $stmt->bind_param("ii", $user_id, $product_id);
     $stmt->execute();
-
+    
     echo json_encode(['success' => true, 'quantity' => 0, 'message' => 'Item removed from cart']);
 } else {
     // Update quantity
@@ -68,7 +68,7 @@ if ($new_quantity == 0) {
         $stmt = $conn->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?");
         $stmt->bind_param("iii", $new_quantity, $user_id, $product_id);
     }
-
+    
     if ($stmt->execute()) {
         echo json_encode(['success' => true, 'quantity' => $new_quantity, 'message' => 'Cart updated successfully']);
     } else {
