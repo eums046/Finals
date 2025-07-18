@@ -24,12 +24,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Admin Login</title>
     <link rel="stylesheet" href="../home/style.css">
     <link rel="stylesheet" href="admin.css">
+    <style>
+        .admin-login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            flex-direction: column;
+        }
+
+        .admin-login-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .admin-login-box h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #111;
+        }
+
+        .admin-login-box .alert {
+            background: #ffe5e5;
+            color: #b30000;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .admin-login-box input,
+        .admin-login-box button {
+            margin-top: 10px;
+        }
+
+        .admin-login-box a {
+            text-align: center;
+            display: block;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        @media (max-width: 480px) {
+            .admin-login-box {
+                padding: 24px 16px;
+            }
+        }
+    </style>
 </head>
 <body class="admin-body">
 <header>
@@ -37,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <img src="../home/images/white-name.png" alt="Store Name" class="name-img">
     </div>
 </header>
+
 <nav>
     <div class="nav-left">
         <a href="../home/home.php">HOME</a>
@@ -47,8 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="../home/profile.php">👤</a>
     </div>
 </nav>
-<main>
-    <div class="profile-box">
+
+<main class="admin-login-wrapper">
+    <div class="admin-login-box">
         <h2>Admin Login</h2>
         <?php if ($error): ?>
             <div class="alert"><?php echo $error; ?></div>
@@ -58,11 +113,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit" class="pay-btn">Login</button>
         </form>
-        <a href="../home/home.php" class="pay-btn" style="margin-top:15px;max-width:250px;">Back to Website Homepage</a>
+        <a href="../home/home.php" class="pay-btn">← Back to Homepage</a>
     </div>
 </main>
+
 <footer>
     <p>OneUnit Left &copy; 2025 | This website is for educational purposes only.</p>
 </footer>
 </body>
 </html>
+

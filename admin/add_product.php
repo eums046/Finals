@@ -80,7 +80,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="name" placeholder="Product Name" required>
             <input type="text" name="description" placeholder="Description" required>
             <input type="text" name="price" placeholder="Price" required>
-            <input type="text" name="category" placeholder="Category" required>
+            <select name="category" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="CPU">CPU</option>
+                <option value="GPU">GPU</option>
+                <option value="RAM">RAM</option>
+            </select>
             <input type="file" name="image" required>
             <button type="submit" class="pay-btn">Add Product</button>
         </form>
