@@ -15,14 +15,18 @@ if (isset($_GET['email']) && isset($_GET['token'])) {
     if ($result && $result->num_rows === 1) {
         $update = "UPDATE users SET is_verified = 1, token = NULL WHERE email='$email'";
         if ($conn->query($update) === TRUE) {
-            echo "<h2>Email verified successfully! You can now <a href='login.php'>log in</a>.</h2>";
+            echo "<div class='verify-message success'>
+                    ✅ Email verified successfully!<br><br>
+                    You can now 
+                    <a href='login.php' class='verify-btn'>log in</a>
+                  </div>";
         } else {
-            echo "<h2>Something went wrong. Please try again later.</h2>";
+            echo "<div class='verify-message error'>❌ Something went wrong. Please try again later.</div>";
         }
     } else {
-        echo "<h2>Invalid or expired verification link.</h2>";
+        echo "<div class='verify-message error'>❌ Invalid or expired verification link.</div>";
     }
 } else {
-    echo "<h2>Missing verification data.</h2>";
+    echo "<div class='verify-message error'>⚠️ Missing verification data.</div>";
 }
 ?>

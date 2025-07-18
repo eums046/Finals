@@ -94,7 +94,7 @@
 </html>
 
 <?php
-$conn = new mysqli("localhost", "root", "", "OneUnitLeft_db");
+$conn = new mysqli("localhost", "root", "", "oneunit_left");
 $result = $conn->query("SELECT * FROM products");
 ?>
 

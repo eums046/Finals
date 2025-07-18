@@ -467,6 +467,49 @@ input[type="password"]
 }
 
 
+/*-----------verify*/
+.verify-message {
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 20px;
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 30px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.95);
+    line-height: 1.7;
+    transition: transform 0.3s ease;
+}
+
+.verify-message.success {
+    color: #000000;
+    border-left: 6px solid #28a745;
+}
+
+.verify-message.error {
+    color: #000000;
+    border-left: 6px solid #dc3545;
+}
+
+.verify-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #000;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: transform 0.3s ease;
+}
+
+.verify-btn:hover {
+    transform: scale(1.05);
+}
+
+
 /*-----------about*/
 .about-box {
     background: url('images/white-bg.jpg') no-repeat center center;
