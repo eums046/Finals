@@ -26,7 +26,6 @@ $categories_result = $conn->query($categories_query);
     <meta charset="UTF-8">
     <title>OneUnit Left - Store</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -191,9 +190,9 @@ $categories_result = $conn->query($categories_query);
             while ($product = $result->fetch_assoc()):
             ?>
                 <div class="product">
-                    <img src="<?= htmlspecialchars($product['image']) ?>" 
+                    <img src="../uploads/<?= htmlspecialchars($product['image']) ?>"
                          alt="<?= htmlspecialchars($product['name']) ?>"
-                         onerror="this.src='images/default-product.jpg'">
+                         onerror="this.src='../images/default-product.jpg'">
                     <h3><?= htmlspecialchars($product['name']) ?></h3>
                     <p class="description"><?= htmlspecialchars($product['description']) ?></p>
                     <p class="price">₱<?= number_format($product['price'], 2) ?></p>
