@@ -24,40 +24,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Admin Login</title>
+    <link rel="stylesheet" href="../home/style.css">
     <link rel="stylesheet" href="admin.css">
-    <style>
-        .back-home-button {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #555;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .back-home-button:hover {
-            background-color: #333;
-        }
-    </style>
 </head>
-<body>
-    <div class="admin-login">
+<body class="admin-body">
+<header>
+    <div class="header-images">
+        <img src="../home/images/white-name.png" alt="Store Name" class="name-img">
+    </div>
+</header>
+<nav>
+    <div class="nav-left">
+        <a href="../home/home.php">HOME</a>
+        <a href="../home/store.php">STORE</a>
+        <a href="../home/about.php">ABOUT</a>
+    </div>
+    <div class="nav-right">
+        <a href="../home/profile.php">👤</a>
+    </div>
+</nav>
+<main>
+    <div class="profile-box">
         <h2>Admin Login</h2>
-        <?php if ($error): ?><p class="error"><?php echo $error; ?></p><?php endif; ?>
-        <form method="post">
+        <?php if ($error): ?>
+            <div class="alert"><?php echo $error; ?></div>
+        <?php endif; ?>
+        <form method="post" class="payment-form">
             <input type="text" name="username" placeholder="Admin Username" required>
             <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
+            <button type="submit" class="pay-btn">Login</button>
         </form>
-
-        <a href="../home/home.php" class="back-home-button">Back to Website Homepage</a>
+        <a href="../home/home.php" class="pay-btn" style="margin-top:15px;max-width:250px;">Back to Website Homepage</a>
     </div>
+</main>
+<footer>
+    <p>OneUnit Left &copy; 2025 | This website is for educational purposes only.</p>
+</footer>
 </body>
 </html>
