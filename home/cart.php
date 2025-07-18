@@ -240,104 +240,104 @@ $result = $stmt->get_result();
     </style>
 </head>
 <body>
-<header>
-    <div class="header-images">
-        <img src="images/white-name.png" alt="Store Name" class="name-img">
-    </div>
-</header>
+    <header>
+        <div class="header-images">
+            <img src="images/white-name.png" alt="Store Name" class="name-img">
+        </div>
+    </header>
 
-<nav>
-    <div class="nav-left">
-        <a href="home.php">HOME</a>
-        <a href="store.php">STORE</a>
-        <a href="about.php">ABOUT</a>
-    </div>
-    <div class="nav-right">
-        <a href="cart.php">🛒</a>
-        <a href="profile.php">👤</a>
-    </div>
-</nav>
+    <nav>
+        <div class="nav-left">
+            <a href="home.php">HOME</a>
+            <a href="store.php">STORE</a>
+            <a href="about.php">ABOUT</a>
+        </div>
+        <div class="nav-right">
+            <a href="cart.php">🛒</a>
+            <a href="profile.php">👤</a>
+        </div>
+    </nav>
 
-<main>
-    <div class="cart-container">
-        <h2>Your Shopping Cart</h2>
+    <main>
+        <div class="cart-container">
+            <h2>Your Shopping Cart</h2>
 
-        <?php if ($result->num_rows > 0): ?>
-            <div class="cart-items" id="cart-items">
-                <?php
-                $total = 0;
-                while ($row = $result->fetch_assoc()):
-                    $subtotal = $row['price'] * $row['quantity'];
-                    $total += $subtotal;
+            <?php if ($result->num_rows > 0): ?>
+                <div class="cart-items" id="cart-items">
+                    <?php
+                    $total = 0;
+                    while ($row = $result->fetch_assoc()):
+                        $subtotal = $row['price'] * $row['quantity'];
+                        $total += $subtotal;
                     ?>
-                    <div class="cart-item" data-product-id="<?= $row['id'] ?>">
-                        <img src="../uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
-                        <div class="product-name"><?= htmlspecialchars($row['name']) ?></div>
-                        <div class="price" data-price="<?= $row['price'] ?>">₱<?= number_format($row['price'], 2) ?></div>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="updateQuantity(<?= $row['id'] ?>, 'decrease')">-</button>
-                            <span class="quantity-display"><?= $row['quantity'] ?></span>
-                            <button class="quantity-btn" onclick="updateQuantity(<?= $row['id'] ?>, 'increase')">+</button>
+                        <div class="cart-item" data-product-id="<?= $row['id'] ?>">
+                            <img src="../uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
+                            <div class="product-name"><?= htmlspecialchars($row['name']) ?></div>
+                            <div class="price" data-price="<?= $row['price'] ?>">₱<?= number_format($row['price'], 2) ?></div>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="updateQuantity(<?= $row['id'] ?>, 'decrease')">-</button>
+                                <span class="quantity-display"><?= $row['quantity'] ?></span>
+                                <button class="quantity-btn" onclick="updateQuantity(<?= $row['id'] ?>, 'increase')">+</button>
+                            </div>
+                            <div class="subtotal">Subtotal: ₱<?= number_format($subtotal, 2) ?></div>
+                            <button class="remove-btn" onclick="removeFromCart(<?= $row['id'] ?>)">Remove</button>
                         </div>
-                        <div class="subtotal">Subtotal: ₱<?= number_format($subtotal, 2) ?></div>
-                        <button class="remove-btn" onclick="removeFromCart(<?= $row['id'] ?>)">Remove</button>
-                    </div>
-                <?php endwhile; ?>
-            </div>
+                    <?php endwhile; ?>
+                </div>
 
-            <div class="cart-total">
-                <div class="total-amount" id="total-amount">Total: ₱<?= number_format($total, 2) ?></div>
-            </div>
+                <div class="cart-total">
+                    <div class="total-amount" id="total-amount">Total: ₱<?= number_format($total, 2) ?></div>
+                </div>
 
-            <div class="cart-buttons">
-                <a href="store.php" class="cart-button">Continue Shopping</a>
-                <a href="payment.php" class="cart-button">Checkout</a>
-            </div>
-        <?php else: ?>
-            <div class="empty-cart" id="empty-cart">
-                <p>Your cart is empty</p>
-                <a href="store.php" class="cart-button">Go Shopping</a>
-            </div>
-        <?php endif; ?>
-    </div>
-</main>
+                <div class="cart-buttons">
+                    <a href="store.php" class="cart-button">Continue Shopping</a>
+                    <a href="payment.php" class="cart-button">Checkout</a>
+                </div>
+            <?php else: ?>
+                <div class="empty-cart" id="empty-cart">
+                    <p>Your cart is empty</p>
+                    <a href="store.php" class="cart-button">Go Shopping</a>
+                </div>
+            <?php endif; ?>
+        </div>
+    </main>
 
-<footer>
-    <p>OneUnit Left &copy; 2025 | This website is for educational purposes only.</p>
-</footer>
+    <footer>
+        <p>OneUnit Left &copy; 2025 | This website is for educational purposes only.</p>
+    </footer>
 
-<script>
+    <script>
     function updateQuantity(productId, action) {
         const cartItem = document.querySelector(`[data-product-id="${productId}"]`);
         const quantityDisplay = cartItem.querySelector('.quantity-display');
         const subtotalDiv = cartItem.querySelector('.subtotal');
         const price = parseFloat(cartItem.querySelector('.price').dataset.price);
-
+        
         // Add loading state
         cartItem.classList.add('loading');
-
+        
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'update_cart.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
+        
         xhr.onload = function() {
             cartItem.classList.remove('loading');
-
+            
             if (this.status === 200) {
                 const response = JSON.parse(this.responseText);
-
+                
                 if (response.success) {
                     if (response.quantity === 0) {
                         // Remove item from cart display
                         cartItem.remove();
-
+                        
                         // Check if cart is empty
                         const remainingItems = document.querySelectorAll('.cart-item');
                         if (remainingItems.length === 0) {
                             document.getElementById('cart-items').innerHTML = '';
                             document.querySelector('.cart-total').style.display = 'none';
                             document.querySelector('.cart-buttons').style.display = 'none';
-                            document.querySelector('.cart-container').innerHTML +=
+                            document.querySelector('.cart-container').innerHTML += 
                                 '<div class="empty-cart"><p>Your cart is empty</p><a href="store.php" class="cart-button">Go Shopping</a></div>';
                         }
                     } else {
@@ -346,7 +346,7 @@ $result = $stmt->get_result();
                         const newSubtotal = price * response.quantity;
                         subtotalDiv.textContent = `Subtotal: ₱${newSubtotal.toFixed(2)}`;
                     }
-
+                    
                     // Update total
                     updateTotal();
                 } else {
@@ -356,12 +356,12 @@ $result = $stmt->get_result();
                 alert('Error updating cart. Please try again.');
             }
         };
-
+        
         xhr.onerror = function() {
             cartItem.classList.remove('loading');
             alert('Error updating cart. Please try again.');
         };
-
+        
         xhr.send(`product_id=${productId}&action=${action}`);
     }
 
@@ -374,15 +374,15 @@ $result = $stmt->get_result();
     function updateTotal() {
         let total = 0;
         const cartItems = document.querySelectorAll('.cart-item');
-
+        
         cartItems.forEach(item => {
             const price = parseFloat(item.querySelector('.price').dataset.price);
             const quantity = parseInt(item.querySelector('.quantity-display').textContent);
             total += price * quantity;
         });
-
+        
         document.getElementById('total-amount').textContent = `Total: ₱${total.toFixed(2)}`;
     }
-</script>
+    </script>
 </body>
 </html>
