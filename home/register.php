@@ -8,12 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $fullname = $_POST["full_name"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $fullname = mysqli_real_escape_string($conn, $_POST["full_name"]);
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    $password = mysqli_real_escape_string($conn, $_POST["password"]);
     $confirm = $_POST["confirm_password"];
-    $address = $_POST["address"];
-    $contact = $_POST["contact_number"];
+    $address = mysqli_real_escape_string($conn, $_POST["address"]);
+    $contact = mysqli_real_escape_string($conn, $_POST["contact_number"]);
 
     if ($password != $confirm) {
         echo "<script>alert('Passwords do not match.');</script>";
