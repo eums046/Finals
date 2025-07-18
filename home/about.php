@@ -85,7 +85,7 @@
             </div>
 
             <div class="team-card">
-                <img src="images/member3.jpg" alt="Jim">
+                <img src="images/jim.jpg" alt="Jim">
                 <div class="overlay">
                     <div>
                         <strong>Jim Manibo</strong><br>
