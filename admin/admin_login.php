@@ -30,6 +30,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Admin Login</title>
     <link rel="stylesheet" href="admin.css">
+    <style>
+        .back-home-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #555;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .back-home-button:hover {
+            background-color: #333;
+        }
+    </style>
 </head>
 <body>
     <div class="admin-login">
@@ -40,6 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
+
+        <a href="../home/home.php" class="back-home-button">Back to Website Homepage</a>
     </div>
 </body>
 </html>

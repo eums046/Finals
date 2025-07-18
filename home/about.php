@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>About | OneUnit Left</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +22,7 @@
     <div class="nav-left">
         <a href="home.php">HOME</a>
         <a href="store.php">STORE</a>
-        <a href="about.php">ABOUT</a>
+        <a href="about.php" class="active">ABOUT</a>
     </div>
     <div class="nav-right">
         <a href="cart.php">🛒</a>
@@ -35,57 +36,72 @@
             <img src="images/black-name.png" alt="Group Logo">
         </div>
 
- <div class="letter-wrapper">
-    <div class="letter-image">
-        <div class="animated-mail">
-            <div class="back-fold"></div>
-            <div class="letter">
-                <div class="letter-border"></div>
-                <div class="letter-title"></div>
-                    <h2>About OneUnit Left</h2>
+        <div class="letter-wrapper">
+            <div class="letter-image">
+                <div class="animated-mail">
+                    <div class="back-fold"></div>
+                    <div class="letter">
+                        <div class="letter-border"></div>
+                        <div class="letter-title">
+                            <h2>About OneUnit Left</h2>
+                        </div>
+                    </div>
+                    <div class="top-fold"></div>
+                    <div class="body"></div>
+                    <div class="left-fold"></div>
+                </div>
+                <div class="shadow"></div>
             </div>
-            <div class="top-fold"></div>
-            <div class="body"></div>
-            <div class="left-fold"></div>
         </div>
-        <div class="shadow"></div>
-    </div>
-</div>
 
-<div class="project-description">
-    <p>
-        OneUnit Left is a class project designed to showcase our skills in web development using PHP, HTML, and CSS. 
-        It features a functioning store, login system, profile page, and other key components of a typical e-commerce website — 
-        all built from scratch by students learning full-stack fundamentals.
-    </p>
-</div>
+        <div class="project-description">
+            <p>
+                OneUnit Left is a class project designed to showcase our skills in web development using PHP, HTML, and CSS. 
+                It features a functioning store, login system, profile page, and other key components of a typical e-commerce website — 
+                all built from scratch by students learning full-stack fundamentals.
+            </p>
+        </div>
 
         <h2>Meet the Team</h2>
         <div class="team-section">
             <div class="team-card">
-    <img src="images/shane.jpg" alt="Member 1">
-    <div class="overlay">
-        <div>
-            <strong>Shane Tampipig</strong><br>
-            <span>An Animation and Game Development student. Chuchucu.</span>
-        </div>
-    </div>
-</div>
-            <div class="team-card">
-                <img src="images/member2.jpg" alt="Member 2">
-                <div class="overlay">fiel</div>
-            </div>
-            <div class="team-card">
-                <img src="images/jim.jpg" alt="Member 3">
-                <div class="overlay">Jim</div>
-                <div>
-                    <strong>Jim Mañibo </strong><br>
-                    <span>An .</span>
+                <img src="images/shane.jpg" alt="Shane Tampipig">
+                <div class="overlay">
+                    <div>
+                        <strong>Shane Tampipig</strong><br>
+                        <span>An Animation and Game Development student. Chuchucu.</span>
+                    </div>
                 </div>
             </div>
+
             <div class="team-card">
-                <img src="images/member4.jpg" alt="Member 4">
-                <div class="overlay">eumi</div>
+                <img src="images/fiel.jpg" alt="Arran Fiel Sinaguinan">
+                <div class="overlay">
+                    <div>
+                        <strong>Arran Fiel Sinaguinan</strong><br>
+                        <span>An IT student specializing in Web and Mobile Design.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img src="images/member3.jpg" alt="Jim">
+                <div class="overlay">
+                    <div>
+                        <strong>Jim Manibo</strong><br>
+                        <span>Handles backend logic and helps maintain the store’s functionality.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <img src="images/member4.jpg" alt="Eumi">
+                <div class="overlay">
+                    <div>
+                        <strong>Eumi Biag</strong><br>
+                        <span>Designs assets, manages the visual theme, and contributes to styling.</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

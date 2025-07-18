@@ -1,12 +1,12 @@
 <?php
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "OneUnitLeft_db";
+$host = 'localhost';
+$user = 'root';
+$pass = ''; // or your MySQL password
+$db   = 'oneunit_left';
 
-$conn = new mysqli($host, $username, $password, $database);
+$conn = mysqli_connect($host, $user, $pass, $db);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 ?>
