@@ -15,6 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = mysqli_real_escape_string($conn, $_POST["address"]);
     $contact = mysqli_real_escape_string($conn, $_POST["contact_number"]);
 
+
+    
     if ($password != $confirm) {
         echo "<script>alert('Passwords do not match.');</script>";
     } else {
