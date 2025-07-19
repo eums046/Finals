@@ -26,7 +26,7 @@ $stmt->close();
 
 if ($user_id !== null) {
     // Fetch cart items from the database using user_id
-    $stmt = $conn->prepare("SELECT p.name, p.price, c.quantity FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = ?");
+    $stmt = $conn->prepare("SELECT p.name, p.price, c.quantity, p.id FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -70,6 +70,19 @@ if ($user_id !== null) {
     <div class="payment-card">
     <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Deduct stock for each product in the cart
+        foreach ($cart as $item) {
+            $stmt = $conn->prepare("UPDATE products SET stock = stock - ? WHERE id = ? AND stock >= ?");
+            $stmt->bind_param("iii", $item['quantity'], $item['id'], $item['quantity']);
+            $stmt->execute();
+            $stmt->close();
+        }
+        // Clear the user's cart after payment
+        $stmt = $conn->prepare("DELETE FROM cart WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->close();
+        // Optionally, clear the user's cart here
         echo '<div class="success-message">
     <span class="checkmark">&#10003;</span>
     Thank you for your payment!<br>Your order has been placed.
