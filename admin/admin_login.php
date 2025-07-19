@@ -73,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 15px;
         }
 
-        .admin-login-box input,
         .admin-login-box button {
             margin-top: 10px;
         }
@@ -83,6 +82,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: block;
             margin-top: 15px;
             color: #333;
+        }
+
+        .admin-login-box input[type="text"],
+        .admin-login-box input[type="password"] {
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
 
         @media (max-width: 480px) {
@@ -116,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php if ($error): ?>
             <div class="alert"><?php echo $error; ?></div>
         <?php endif; ?>
-        <form method="post" class="payment-form">
+        <form method="post">
             <input type="text" name="username" placeholder="Admin Username" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit" class="pay-btn">Login</button>
