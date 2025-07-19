@@ -58,6 +58,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">  
+    <style>
+        .wide-btn {
+            width: 250px;
+            max-width: 100%;
+            display: block;
+            margin: 10px auto 0 auto;
+            text-align: center;
+        }
+        @media (max-width: 400px) {
+            .wide-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body class="admin-body">
 <header>
@@ -93,9 +107,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="RAM">RAM</option>
             </select>
             <input type="file" name="image" required>
-            <button type="submit" class="pay-btn">Add Product</button>
+            <button type="submit" class="pay-btn wide-btn">Add Product</button>
         </form>
-        <a href="dashboard.php" class="pay-btn" style="max-width:250px;">Back to Dashboard</a>
+        <a href="dashboard.php" class="pay-btn wide-btn">Back to Dashboard</a>
     </div>
 </main>
 <footer>

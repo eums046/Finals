@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Admin Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../home/style.css">
+    <link rel="stylesheet" href="adminlogin.css">
     <link rel="stylesheet" href="admin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,15 +84,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #333;
         }
 
-        .admin-login-box input[type="text"],
-        .admin-login-box input[type="password"] {
+        .admin-login-box form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+        }
+
+        .admin-input {
             width: 100%;
+            min-width: 0;
             box-sizing: border-box;
             display: block;
-            margin-bottom: 10px;
+            margin: 0 0 14px 0;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ccc;
+            font-size: 14px;
         }
 
         @media (max-width: 480px) {
@@ -127,8 +135,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="alert"><?php echo $error; ?></div>
         <?php endif; ?>
         <form method="post">
-            <input type="text" name="username" placeholder="Admin Username" required>
-            <input type="password" name="password" placeholder="Password" required>
+            <input type="text" name="username" placeholder="Admin Username" required class="admin-input">
+            <input type="password" name="password" placeholder="Password" required class="admin-input">
             <button type="submit" class="pay-btn">Login</button>
         </form>
         <a href="../home/index.php" class="pay-btn">← Back to Homepage</a>
@@ -140,4 +148,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </footer>
 </body>
 </html>
-
