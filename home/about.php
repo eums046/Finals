@@ -95,7 +95,7 @@
             </div>
 
             <div class="team-card">
-                <img src="images/member4.jpg" alt="Eumi">
+                <img src="images/eumi.jpeg" alt="Eumi">
                 <div class="overlay">
                     <div>
                         <strong>Eumi Biag</strong><br>
