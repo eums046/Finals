@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$conn = new mysqli("sql107.infinityfree.com", "if0_39501475", "2FaKH0u92yc", "if0_39501475_oneunit_left");
+$conn = new mysqli("localhost", "root", "", "oneunit_left");
 
 // Get selected category from URL parameter, default to 'all'
 $selected_category = isset($_GET['category']) ? $_GET['category'] : 'all';
