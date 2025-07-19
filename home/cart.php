@@ -56,9 +56,11 @@ $result = $stmt->get_result();
 
         .cart-items {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin: 20px 0;
+            justify-content: center;
+            justify-items: center;
         }
 
         .cart-item {
@@ -68,6 +70,8 @@ $result = $stmt->get_result();
             padding: 20px;
             text-align: center;
             transition: transform 0.3s ease;
+            width: 100%;
+            max-width: 300px;
         }
 
         .cart-item:hover {
@@ -105,6 +109,13 @@ $result = $stmt->get_result();
         .quantity-btn:hover {
             background: #ddd;
             transform: scale(1.05);
+        }
+
+        .quantity-btn:disabled {
+            background: #666;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .cart-total {
@@ -205,6 +216,27 @@ $result = $stmt->get_result();
             margin-top: 50px;
             border-top: 1px solid #333;
         }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .remove-btn {
+            background: #ff4444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #cc0000;
+        }
     </style>
 </head>
 <body>
@@ -231,29 +263,30 @@ $result = $stmt->get_result();
             <h2>Your Shopping Cart</h2>
 
             <?php if ($result->num_rows > 0): ?>
-                <div class="cart-items">
+                <div class="cart-items" id="cart-items">
                     <?php
                     $total = 0;
                     while ($row = $result->fetch_assoc()):
                         $subtotal = $row['price'] * $row['quantity'];
                         $total += $subtotal;
                     ?>
-                        <div class="cart-item">
+                        <div class="cart-item" data-product-id="<?= $row['id'] ?>">
                             <img src="../uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
                             <div class="product-name"><?= htmlspecialchars($row['name']) ?></div>
-                            <div class="price">₱<?= number_format($row['price'], 2) ?></div>
+                            <div class="price" data-price="<?= $row['price'] ?>">₱<?= number_format($row['price'], 2) ?></div>
                             <div class="quantity-controls">
                                 <button class="quantity-btn" onclick="updateQuantity(<?= $row['id'] ?>, 'decrease')">-</button>
                                 <span class="quantity-display"><?= $row['quantity'] ?></span>
                                 <button class="quantity-btn" onclick="updateQuantity(<?= $row['id'] ?>, 'increase')">+</button>
                             </div>
                             <div class="subtotal">Subtotal: ₱<?= number_format($subtotal, 2) ?></div>
+                            <button class="remove-btn" onclick="removeFromCart(<?= $row['id'] ?>)">Remove</button>
                         </div>
                     <?php endwhile; ?>
                 </div>
 
                 <div class="cart-total">
-                    <div class="total-amount">Total: ₱<?= number_format($total, 2) ?></div>
+                    <div class="total-amount" id="total-amount">Total: ₱<?= number_format($total, 2) ?></div>
                 </div>
 
                 <div class="cart-buttons">
@@ -261,7 +294,7 @@ $result = $stmt->get_result();
                     <a href="payment.php" class="cart-button">Checkout</a>
                 </div>
             <?php else: ?>
-                <div class="empty-cart">
+                <div class="empty-cart" id="empty-cart">
                     <p>Your cart is empty</p>
                     <a href="store.php" class="cart-button">Go Shopping</a>
                 </div>
@@ -275,15 +308,80 @@ $result = $stmt->get_result();
 
     <script>
     function updateQuantity(productId, action) {
+        const cartItem = document.querySelector(`[data-product-id="${productId}"]`);
+        const quantityDisplay = cartItem.querySelector('.quantity-display');
+        const subtotalDiv = cartItem.querySelector('.subtotal');
+        const price = parseFloat(cartItem.querySelector('.price').dataset.price);
+        
+        // Add loading state
+        cartItem.classList.add('loading');
+        
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'update_cart.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        
         xhr.onload = function() {
+            cartItem.classList.remove('loading');
+            
             if (this.status === 200) {
-                location.reload();
+                const response = JSON.parse(this.responseText);
+                
+                if (response.success) {
+                    if (response.quantity === 0) {
+                        // Remove item from cart display
+                        cartItem.remove();
+                        
+                        // Check if cart is empty
+                        const remainingItems = document.querySelectorAll('.cart-item');
+                        if (remainingItems.length === 0) {
+                            document.getElementById('cart-items').innerHTML = '';
+                            document.querySelector('.cart-total').style.display = 'none';
+                            document.querySelector('.cart-buttons').style.display = 'none';
+                            document.querySelector('.cart-container').innerHTML += 
+                                '<div class="empty-cart"><p>Your cart is empty</p><a href="store.php" class="cart-button">Go Shopping</a></div>';
+                        }
+                    } else {
+                        // Update quantity and subtotal
+                        quantityDisplay.textContent = response.quantity;
+                        const newSubtotal = price * response.quantity;
+                        subtotalDiv.textContent = `Subtotal: ₱${newSubtotal.toFixed(2)}`;
+                    }
+                    
+                    // Update total
+                    updateTotal();
+                } else {
+                    alert('Error updating cart: ' + response.message);
+                }
+            } else {
+                alert('Error updating cart. Please try again.');
             }
         };
+        
+        xhr.onerror = function() {
+            cartItem.classList.remove('loading');
+            alert('Error updating cart. Please try again.');
+        };
+        
         xhr.send(`product_id=${productId}&action=${action}`);
+    }
+
+    function removeFromCart(productId) {
+        if (confirm('Are you sure you want to remove this item from your cart?')) {
+            updateQuantity(productId, 'remove');
+        }
+    }
+
+    function updateTotal() {
+        let total = 0;
+        const cartItems = document.querySelectorAll('.cart-item');
+        
+        cartItems.forEach(item => {
+            const price = parseFloat(item.querySelector('.price').dataset.price);
+            const quantity = parseInt(item.querySelector('.quantity-display').textContent);
+            total += price * quantity;
+        });
+        
+        document.getElementById('total-amount').textContent = `Total: ₱${total.toFixed(2)}`;
     }
     </script>
 </body>
