@@ -71,6 +71,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 width: 100%;
             }
         }
+        input[type="file"] {
+            color: #111; /* This sets the color of the file name text */
+        }
+
+        input[type="file"]::file-selector-button {
+            color: #fff; /* Button text color */
+            background: #232526;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background: #414345;
+        }
     </style>
 </head>
 <body class="admin-body">
@@ -93,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="profile-box">
         <h2>Add New Product</h2>
         <?php if ($message): ?>
-            <div class="alert<?php echo strpos($message, 'success') !== false ? ' success' : ''; ?>"><?php echo $message; ?></div>
+            <div class="alert<?php echo strpos($message, 'success') !== false ? ' success' : ''; ?>" style="color:#111;"><?php echo $message; ?></div>
         <?php endif; ?>
         <form method="POST" enctype="multipart/form-data" class="payment-form">
             <input type="text" name="name" placeholder="Product Name" required>
