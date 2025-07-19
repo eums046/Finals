@@ -56,6 +56,7 @@ $result = $conn->query($sql);
                         <th>Description</th>
                         <th>Price</th>
                         <th>Category</th>
+                        <th>Stock</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -68,6 +69,7 @@ $result = $conn->query($sql);
                         <td><?= htmlspecialchars($row['description']); ?></td>
                         <td>₱<?= number_format($row['price'], 2); ?></td>
                         <td><?= htmlspecialchars($row['category']); ?></td>
+                        <td><?= $row['stock']; ?></td>
                         <td class="actions" style="min-width:140px;">
                             <a href="edit_product.php?id=<?= $row['id']; ?>" class="pay-btn">Edit</a>
                             <a href="delete_product.php?id=<?= $row['id']; ?>" class="pay-btn" style="background:#c0392b;" onclick="return confirm('Delete this product?');">Delete</a>

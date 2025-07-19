@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $desc = trim($_POST['description']);
     $price = floatval($_POST['price']);
     $category = trim($_POST['category']);
+    $stock = intval($_POST['stock']);
 
     // Upload Settings
     $image_tmp = $_FILES['image']['tmp_name'];
@@ -34,8 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target = "../uploads/" . $new_filename;
 
         if (move_uploaded_file($image_tmp, $target)) {
-            $stmt = $conn->prepare("INSERT INTO products (name, description, price, category, image) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssdss", $name, $desc, $price, $category, $new_filename);
+            $stmt = $conn->prepare("INSERT INTO products (name, description, price, category, image, stock) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssdssi", $name, $desc, $price, $category, $new_filename, $stock);
             if ($stmt->execute()) {
                 $message = "✅ Product added successfully!";
             } else {
@@ -84,6 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="name" placeholder="Product Name" required>
             <input type="text" name="description" placeholder="Description" required>
             <input type="text" name="price" placeholder="Price" required>
+            <input type="number" name="stock" placeholder="Stock Quantity" min="0" required>
             <select name="category" required>
                 <option value="" disabled selected>Select Category</option>
                 <option value="CPU">CPU</option>

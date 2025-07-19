@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = trim($_POST['description']);
     $price = floatval($_POST['price']);
     $category = trim($_POST['category']);
+    $stock = (int) $_POST['stock'];
     
     // Image upload (optional)
     if (!empty($_FILES['image']['name'])) {
@@ -36,11 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_file = $target_dir . $image;
         move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 
-        $stmt = $conn->prepare("UPDATE products SET name=?, description=?, price=?, category=?, image=? WHERE id=?");
-        $stmt->bind_param("ssdssi", $name, $description, $price, $category, $image, $id);
+        $stmt = $conn->prepare("UPDATE products SET name=?, description=?, price=?, category=?, image=?, stock=? WHERE id=?");
+        $stmt->bind_param("ssdsisi", $name, $description, $price, $category, $image, $stock, $id);
     } else {
-        $stmt = $conn->prepare("UPDATE products SET name=?, description=?, price=?, category=? WHERE id=?");
-        $stmt->bind_param("ssdsi", $name, $description, $price, $category, $id);
+        $stmt = $conn->prepare("UPDATE products SET name=?, description=?, price=?, category=?, stock=? WHERE id=?");
+        $stmt->bind_param("ssdsii", $name, $description, $price, $category, $stock, $id);
+
     }
 
     $stmt->execute();
@@ -68,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <textarea name="description" required><?= htmlspecialchars($product['description']) ?></textarea>
         <input type="number" name="price" value="<?= $product['price'] ?>" step="0.01" required>
         <input type="text" name="category" value="<?= htmlspecialchars($product['category']) ?>" required>
+        <input type="number" name="stock" value="<?= $product['stock'] ?>" min="0" required>
         <p>Current Image: <img src="../uploads/<?= $product['image'] ?>" width="60"></p>
         <input type="file" name="image">
         <button type="submit" class="pay-btn">Update Product</button>

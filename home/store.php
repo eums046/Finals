@@ -1,6 +1,6 @@
-<?php 
+<?php
 session_start();
-$conn = new mysqli("sql107.infinityfree.com", "if0_39501475", "2FaKH0u92yc", "if0_39501475_oneunit_left");
+require_once '../includes/db_connection.php';
 
 // Get selected category from URL parameter, default to 'all'
 $selected_category = isset($_GET['category']) ? $_GET['category'] : 'all';
@@ -199,9 +199,13 @@ $categories_result = $conn->query($categories_query);
                     <p class="price">₱<?= number_format($product['price'], 2) ?></p>
                     <p class="stock">Stock: <?= $product['stock'] ?></p>
                     <form action="add_to_cart.php" method="post">
-                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                        <input type="submit" value="Add to Cart">
-                    </form>
+    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+    <input type="submit" value="Add to Cart" <?= $product['stock'] <= 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : '' ?>>
+</form>
+<?php if ($product['stock'] <= 0): ?>
+    <p style="color: red; font-weight: bold;">Out of Stock</p>
+<?php endif; ?>
+
                 </div>
             <?php endwhile; ?>
         </div>
