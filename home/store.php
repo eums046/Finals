@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../includes/db_connection.php';
+$conn = new mysqli("localhost", "root", "", "oneunit_left");
 
 // Get selected category from URL parameter, default to 'all'
 $selected_category = isset($_GET['category']) ? $_GET['category'] : 'all';

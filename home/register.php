@@ -7,14 +7,9 @@ use PHPMailer\PHPMailer\Exception;
 require 'phpmailer/PHPMailer.php';
 require 'phpmailer/SMTP.php';
 require 'phpmailer/Exception.php';
+require_once '../includes/db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = new mysqli("sql107.infinityfree.com", "if0_39501475", "2FaKH0u92yc", "if0_39501475_oneunit_left");
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
     $fullname = mysqli_real_escape_string($conn, $_POST["full_name"]);
     $email = mysqli_real_escape_string($conn, $_POST["email"]);
     $password = mysqli_real_escape_string($conn, $_POST["password"]);
