@@ -17,10 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};:"\\\\|,.<>\/?]{8,}$/', $password)) {
-        echo "<script>alert('Password must be at least 8 characters and include at least one letter and one number.');</script>";
+    echo "<script>alert('Password must be at least 8 characters and include at least one letter and one number.');</script>";
+    exit;
     } elseif ($password != $confirm) {
         echo "<script>alert('Passwords do not match.');</script>";
-    } else {
+        exit;
+    }
+    else {
         $sql = "INSERT INTO users (full_name, email, password, address, contact_number)
                 VALUES ('$fullname', '$email', '$password', '$address', '$contact')";
         if ($conn->query($sql) === TRUE) {
