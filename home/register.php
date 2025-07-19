@@ -16,6 +16,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact = mysqli_real_escape_string($conn, $_POST["contact_number"]);
 
 
+    if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};:"\\\\|,.<>\/?]{8,}$/', $password)) {
+        echo "<script>alert('Password must be at least 8 characters and include at least one letter and one number.');</script>";
+    } elseif ($password != $confirm) {
+        echo "<script>alert('Passwords do not match.');</script>";
+    } else {
+        $sql = "INSERT INTO users (full_name, email, password, address, contact_number)
+                VALUES ('$fullname', '$email', '$password', '$address', '$contact')";
+        if ($conn->query($sql) === TRUE) {
+            echo "<script>alert('Registration successful! You may now log in.');</script>";
+            echo "<script>window.location.href='login.php';</script>";
+        } else {
+            echo "<script>alert('Error: " . $conn->error . "');</script>";
+        }
+    }
+
     
     if ($password != $confirm) {
         echo "<script>alert('Passwords do not match.');</script>";
@@ -73,8 +88,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="post" action="">
             <p><input type="text" name="full_name" class="profile-input" placeholder="Complete Name" required></p>
             <p><input type="email" name="email" class="profile-input" placeholder="Email Address" required></p>
-            <p><input type="password" name="password" class="profile-input" placeholder="Password" required></p>
-            <p><input type="password" name="confirm_password" class="profile-input" placeholder="Confirm Password" required></p>
+            <p><input type="password" name="password" class="profile-input" placeholder="Password" required
+            pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};:'\\|,.<>\/?]{8,}"
+            title="Password must be at least 8 characters long and include at least one letter and one number."></p>
+            <p><input type="password" name="confirm_password" class="profile-input" placeholder="Confirm Password" required
+            pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};:'\\|,.<>\/?]{8,}"></p>
             <p><input type="text" name="address" class="profile-input" placeholder="Complete Address" required></p>
             <p><input type="text" name="contact_number" class="profile-input" placeholder="Contact Number" required></p>
             <div class="profile-btns">
