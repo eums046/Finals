@@ -49,7 +49,7 @@ $categories_result = $conn->query($categories_query);
             border: 1px solid #333;
             padding: 10px 20px;
             margin: 0 10px;
-            border-radius: 4px;
+            border-radius: 999px;
             cursor: pointer;
             font-size: 16px;
             text-decoration: none;
