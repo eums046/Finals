@@ -1,6 +1,13 @@
 <?php
 session_start();
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'phpmailer/PHPMailer.php';
+require 'phpmailer/SMTP.php';
+require 'phpmailer/Exception.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn = new mysqli("sql107.infinityfree.com", "if0_39501475", "2FaKH0u92yc", "if0_39501475_oneunit_left");
 
@@ -15,43 +22,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = mysqli_real_escape_string($conn, $_POST["address"]);
     $contact = mysqli_real_escape_string($conn, $_POST["contact_number"]);
 
-
+    // Password validation
     if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};:"\\\\|,.<>\/?]{8,}$/', $password)) {
-    echo "<script>alert('Password must be at least 8 characters and include at least one letter and one number.'); window.history.back();</script>";
-    exit;
+        echo "<script>alert('Password must be at least 8 characters and include at least one letter and one number.'); window.history.back();</script>";
+        exit;
     } elseif ($password != $confirm) {
         echo "<script>alert('Passwords do not match.'); window.history.back();</script>";
         exit;
     }
 
-    else {
-        $sql = "INSERT INTO users (full_name, email, password, address, contact_number)
-                VALUES ('$fullname', '$email', '$password', '$address', '$contact')";
-        if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Registration successful! You may now log in.');</script>";
-            echo "<script>window.location.href='login.php';</script>";
-        } else {
-            echo "<script>alert('Error: " . $conn->error . "');</script>";
-        }
-    }
+    // Hash password and generate token
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $token = bin2hex(random_bytes(16));
 
-    
-    if ($password != $confirm) {
-        echo "<script>alert('Passwords do not match.');</script>";
-    } else {
-        $sql = "INSERT INTO users (full_name, email, password, address, contact_number)
-                VALUES ('$fullname', '$email', '$password', '$address', '$contact')";
-        if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Registration successful! You may now log in.');</script>";
-            echo "<script>window.location.href='login.php';</script>";
-        } else {
-            echo "<script>alert('Error: " . $conn->error . "');</script>";
+    // Insert user into database
+    $sql = "INSERT INTO users (full_name, email, password, address, contact_number, token, is_verified)
+            VALUES ('$fullname', '$email', '$hashed_password', '$address', '$contact', '$token', 0)";
+
+    if ($conn->query($sql) === TRUE) {
+        $verify_link = "https://oneunitleft.rf.gd/home/verify.php?email=" . urlencode($email) . "&token=" . urlencode($token);
+
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp-relay.brevo.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = '928249001@smtp-brevo.com';
+            $mail->Password = 'qLEc01xnHf2MFO7N';
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+
+            $mail->setFrom('928249001@smtp-brevo.com', 'OneUnit Left');
+            $mail->addAddress($email);
+            $mail->Subject = 'Verify your OneUnit Left account';
+            $mail->Body = "Hi $fullname,\n\nPlease click the link below to verify your OneUnit Left account:\n\n$verify_link\n\nThank you!";
+
+            $mail->send();
+            echo "<script>alert('Registration successful! Please check your email to verify your account.'); window.location.href='login.php';</script>";
+        } catch (Exception $e) {
+            echo "<script>alert('Registered, but verification email failed: " . $mail->ErrorInfo . "'); window.location.href='login.php';</script>";
         }
+    } else {
+        echo "<script>alert('Error: " . $conn->error . "');</script>";
     }
 
     $conn->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
