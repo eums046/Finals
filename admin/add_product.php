@@ -34,7 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $new_filename = uniqid("prod_", true) . "." . $ext;
         $target = "../uploads/" . $new_filename;
 
-        if (move_uploaded_file($image_tmp, $target)) {
+        if (!move_uploaded_file($image_tmp, $target)) {
+            $message = "❌ Failed to upload image. Error code: " . $_FILES['image']['error'];
+        } else {
             $stmt = $conn->prepare("INSERT INTO products (name, description, price, category, image, stock) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssdssi", $name, $desc, $price, $category, $new_filename, $stock);
             if ($stmt->execute()) {
@@ -42,8 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $message = "❌ Database error.";
             }
-        } else {
-            $message = "❌ Failed to upload image.";
         }
     }
 }
