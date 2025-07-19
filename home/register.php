@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('928249001@smtp-brevo.com', 'OneUnit Left');
+            $mail->setFrom('tampipig10@gmail.com', 'OneUnit Left');
             $mail->addAddress($email);
             $mail->Subject = 'Verify your OneUnit Left account';
             $mail->Body = "Hi $fullname,\n\nPlease click the link below to verify your OneUnit Left account:\n\n$verify_link\n\nThank you!";
