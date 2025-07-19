@@ -23,11 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
 
         // 1. Check if verified
-        if ((int)$row['is_verified'] !== 1) {
-            $error = "Please verify your email before logging in.";
-        }
+        // if ((int)$row['is_verified'] !== 1) {
+        //     $error = "Please verify your email before logging in.";
+        // }
         // 2. Check hashed password
-        elseif (password_verify($password, $row['password'])) {
+        if (password_verify($password, $row['password'])) {
             $_SESSION["email"] = $row["email"];
             $_SESSION["user_id"] = $row["id"];
             header("Location: profile.php");

@@ -1,12 +1,15 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
 
-require 'phpmailer/PHPMailer.php';
-require 'phpmailer/SMTP.php';
-require 'phpmailer/Exception.php';
+// require 'phpmailer/PHPMailer.php';
+// require 'phpmailer/SMTP.php';
+// require 'phpmailer/Exception.php';
 require_once '../includes/db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -35,28 +38,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$fullname', '$email', '$hashed_password', '$address', '$contact', '$token', 0)";
 
     if ($conn->query($sql) === TRUE) {
-        $verify_link = "https://oneunitleft.rf.gd/home/verify.php?email=" . urlencode($email) . "&token=" . urlencode($token);
+        // $verify_link = "https://oneunitleft.rf.gd/home/verify.php?email=" . urlencode($email) . "&token=" . urlencode($token);
 
-        $mail = new PHPMailer(true);
-        try {
-            $mail->isSMTP();
-            $mail->Host = 'smtp-relay.brevo.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = '928249001@smtp-brevo.com';
-            $mail->Password = 'qLEc01xnHf2MFO7N';
-            $mail->SMTPSecure = 'tls';
-            $mail->Port = 587;
+        // $mail = new PHPMailer(true);
+        // try {
+        //     $mail->isSMTP();
+        //     $mail->Host = 'smtp-relay.brevo.com';
+        //     $mail->SMTPAuth = true;
+        //     $mail->Username = '928249001@smtp-brevo.com';
+        //     $mail->Password = 'qLEc01xnHf2MFO7N';
+        //     $mail->SMTPSecure = 'tls';
+        //     $mail->Port = 587;
 
-            $mail->setFrom('tampipig10@gmail.com', 'OneUnit Left');
-            $mail->addAddress($email);
-            $mail->Subject = 'Verify your OneUnit Left account';
-            $mail->Body = "Hi $fullname,\n\nPlease click the link below to verify your OneUnit Left account:\n\n$verify_link\n\nThank you!";
+        //     $mail->setFrom('tampipig10@gmail.com', 'OneUnit Left');
+        //     $mail->addAddress($email);
+        //     $mail->Subject = 'Verify your OneUnit Left account';
+        //     $mail->Body = "Hi $fullname,\n\nPlease click the link below to verify your OneUnit Left account:\n\n$verify_link\n\nThank you!";
 
-            $mail->send();
-            echo "<script>alert('Registration successful! Please check your email to verify your account.'); window.location.href='login.php';</script>";
-        } catch (Exception $e) {
-            echo "<script>alert('Registered, but verification email failed: " . $mail->ErrorInfo . "'); window.location.href='login.php';</script>";
-        }
+        //     $mail->send();
+        //     echo "<script>alert('Registration successful! Please check your email to verify your account.'); window.location.href='login.php';</script>";
+        // } catch (Exception $e) {
+        //     echo "<script>alert('Registered, but verification email failed: " . $mail->ErrorInfo . "'); window.location.href='login.php';</script>";
+        // }
+        echo "<script>alert('Registration successful! (Email sending skipped on localhost)'); window.location.href='login.php';</script>";
     } else {
         echo "<script>alert('Error: " . $conn->error . "');</script>";
     }
