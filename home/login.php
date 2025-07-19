@@ -12,27 +12,34 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST["email"]);
-    $password = mysqli_real_escape_string($conn, $_POST["password"]);
+    $password = $_POST["password"];
 
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-
-
+    $sql = "SELECT * FROM users WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
 
-    if (mysqli_num_rows($result) === 1) {
+    if ($result && mysqli_num_rows($result) === 1) {
         $row = mysqli_fetch_assoc($result);
-        $_SESSION["email"] = $row["email"];
-        header("Location: profile.php");
-        exit();
+
+        // 1. Check if verified
+        if ((int)$row['is_verified'] !== 1) {
+            $error = "Please verify your email before logging in.";
+        }
+        // 2. Check hashed password
+        elseif (password_verify($password, $row['password'])) {
+            $_SESSION["email"] = $row["email"];
+            $_SESSION["user_id"] = $row["id"];
+            header("Location: profile.php");
+            exit();
+        } else {
+            $error = "Invalid password.";
+        }
     } else {
-        $error = "Invalid email or password!";
+        $error = "Account not found.";
     }
 }
 ?>
-
 
 
 <!DOCTYPE html>
