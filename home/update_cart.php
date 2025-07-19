@@ -41,7 +41,20 @@ $new_quantity = $current_quantity;
 
 switch ($action) {
     case 'increase':
-        $new_quantity = $current_quantity + 1;
+        // Check current stock
+        $stock_stmt = $conn->prepare("SELECT stock FROM products WHERE id = ?");
+        $stock_stmt->bind_param("i", $product_id);
+        $stock_stmt->execute();
+        $stock_result = $stock_stmt->get_result();
+        $product = $stock_result->fetch_assoc();
+        $available_stock = $product['stock'];
+
+        if ($current_quantity + 1 > $available_stock) {
+            echo json_encode(['success' => false, 'message' => 'Not enough stock available']);
+            exit();
+        } else {
+            $new_quantity = $current_quantity + 1;
+        }
         break;
     case 'decrease':
         $new_quantity = max(0, $current_quantity - 1);
