@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <nav>
     <div class="nav-left">
-        <a href="../home/home.php">HOME</a>
+        <a href="../home/index.php">HOME</a>
         <a href="../home/store.php">STORE</a>
         <a href="../home/about.php">ABOUT</a>
     </div>
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit" class="pay-btn">Login</button>
         </form>
-        <a href="../home/home.php" class="pay-btn">← Back to Homepage</a>
+        <a href="../home/index.php" class="pay-btn">← Back to Homepage</a>
     </div>
 </main>
 

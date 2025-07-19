@@ -26,7 +26,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 </header>
 <nav>
     <div class="nav-left">
-        <a href="../home/home.php">HOME</a>
+        <a href="../home/index.php">HOME</a>
         <a href="../home/store.php">STORE</a>
         <a href="../home/about.php">ABOUT</a>
     </div>
@@ -39,7 +39,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         <h2>Admin Dashboard</h2>
         <p style="margin-bottom:24px;">Welcome, <strong><?php echo htmlspecialchars($_SESSION['admin_username']); ?></strong>!</p>
         <div class="profile-btns">
-            <a href="../home/home.php" class="pay-btn">Back to Homepage</a>
+            <a href="../home/index.php" class="pay-btn">Back to Homepage</a>
             <a href="add_product.php" class="pay-btn">Add New Product</a>
             <a href="view_products.php" class="pay-btn">View All Products</a>
             <a href="admin_logout.php" class="pay-btn">Logout</a>

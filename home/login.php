@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "oneunit_left";
+$user = "if0_39501475";                
+$pass = "2FaKH0u92yc";   
+$dbname = "if0_39501475_oneunit_left";  
 
 $conn = mysqli_connect($host, $user, $pass, $dbname);
+
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <nav>
         <div class="nav-left">
-            <a href="home.php">HOME</a>
+            <a href="index.php">HOME</a>
             <a href="store.php">STORE</a>
             <a href="about.php">ABOUT</a>
         </div>
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
 
         <div class="profile-btns">
-            <a href="home.php">Back to Home</a>
+            <a href="index.php">Back to Home</a>
         </div>
 
         <?php if (isset($error)) echo "<p class='error' style='color:red;'>$error</p>"; ?>

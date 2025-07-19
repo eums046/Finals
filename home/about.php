@@ -20,7 +20,7 @@
 
 <nav>
     <div class="nav-left">
-        <a href="home.php">HOME</a>
+        <a href="index.php">HOME</a>
         <a href="store.php">STORE</a>
         <a href="about.php" class="active">ABOUT</a>
     </div>

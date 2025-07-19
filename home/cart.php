@@ -6,7 +6,7 @@ if (!isset($_SESSION["email"])) {
     exit();
 }
 
-$conn = new mysqli("localhost", "root", "", "oneunit_left");
+$conn = new mysqli("sql107.infinityfree.com", "if0_39501475", "2FaKH0u92yc", "if0_39501475_oneunit_left");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -216,7 +216,7 @@ $result = $stmt->get_result();
 
     <nav>
         <div class="nav-left">
-            <a href="home.php">HOME</a>
+            <a href="index.php">HOME</a>
             <a href="store.php">STORE</a>
             <a href="about.php">ABOUT</a>
         </div>
